@@ -11,7 +11,9 @@ import * as serviceWorker from './serviceWorker';
 // require('./index.scss')
 
 ReactDOM.hydrate(<App />, document.getElementById('root'))
-ReactDOM.render(<Recommends />, document.getElementById('react-root'))
+if(window.location.pathname === '/home') {
+    ReactDOM.render(<Recommends />, document.getElementById('react-root'))
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,5 +1,7 @@
 import React from 'react'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import First from './components'
+import Login from './components/login'
 require('./App.scss')
 
 // const React = require('react')
@@ -27,13 +29,28 @@ function App() {
   //   })
   // }, [])
   return (
-    <First 
-      banners={banners || []}
-      notice={notice}
-      catalogs={catalogs || []}
-      brands={brands || []}
-      recommends={recommends || []}
-    />
+    <BrowserRouter>
+      <Switch>
+        <Route path='/' render={() => <Redirect to='/home' />} exact />
+        <Route path='/home' render={() => (
+          <First 
+            banners={banners || []}
+            notice={notice}
+            catalogs={catalogs || []}
+            brands={brands || []}
+            recommends={recommends || []}
+          />
+        )} />
+        <Route path='/login' component={Login} />
+      </Switch>
+    </BrowserRouter>
+    // <First 
+    //   banners={banners || []}
+    //   notice={notice}
+    //   catalogs={catalogs || []}
+    //   brands={brands || []}
+    //   recommends={recommends || []}
+    // />
   )
 }
 
