@@ -10,6 +10,8 @@ require('./App.scss')
 const URL = 'https://zkh-website-api-pro.zkh360.com/v1/h5'
 const { banners, notice, catalogs, brands, recommends } = window.initReactData
 
+delete window.initReactData
+
 function App() {
   // const [banners, setBanners] = useState([])
   // const [notice, setNotice] = useState('')

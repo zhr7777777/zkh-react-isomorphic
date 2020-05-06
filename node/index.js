@@ -29,8 +29,9 @@ let cacheExpireTimer
 
 // app.use(cache.middleware()) // 设置缓存，命中缓存直接返回，qps增加到900多
 
-app.use(mount('/', async ctx => {
-  if (homePageBuf) {
+app.use(async ctx => {
+  // if (homePageBuf) {
+  if (false) {
     ctx.body = homePageBuf
   } else {
     const res = await axios.get(`${URL}/home`)
@@ -41,25 +42,30 @@ app.use(mount('/', async ctx => {
     //     el(res.data.data)
     //   )
     // ))
+    const context = {}
 
     homePageBuf = template({
       data: res.data.data,
       html: renderMethod(
-        el(res.data.data)
+        el(res.data.data, ctx.url, context)
       )
     })
 
-    if(!cacheExpireTimer) {
-      cacheExpireTimer = setTimeout(() => { // 设置3秒缓存过期时间
-        homePageBuf = null
-        clearTimeout(cacheExpireTimer)
-      }, 3000)
+    if(context.url) {
+      ctx.redirect(context.url)
     }
+
+    // if(!cacheExpireTimer) {
+    //   cacheExpireTimer = setTimeout(() => { // 设置3秒缓存过期时间
+    //     homePageBuf = null
+    //     clearTimeout(cacheExpireTimer)
+    //   }, 3000)
+    // }
     ctx.body = homePageBuf
   }
   ctx.status = 200
   ctx.type = 'html'
-}))
+})
 
 // use Cache
 // let pageCache = null

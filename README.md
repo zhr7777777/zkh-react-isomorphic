@@ -8,16 +8,15 @@
 cd browser
 npm run build
 
-cd client
 npm start
 ```
 访问http://localhost:3000/
 
 ### 概述
-项目实现了首页组件在服务端渲染（renderToString），也在客户端注水（hydrate）用来绑定事件，也就是同构。
-通过多种优化手段，比如设置页面级别缓存、混合ssr和客户端渲染实现异步加载（类似淘宝pc首页ssr先渲染首屏结点，下拉加载由客户端渲染）。实现了减小首屏渲染时间，seo优化，提高qps的效果
+项目实现了首页组件在服务端渲染（renderToString），在客户端注水（hydrate）用来绑定事件，也就是同构。
+通过多种优化手段，比如设置页面级别缓存、混合ssr和客户端渲染实现异步加载（类似淘宝pc首页先渲染首屏结点，下拉加载由客户端渲染）。实现了减小首屏渲染时间，seo优化，提高qps的效果
 
-### 项目struction
+### 项目结构
 
 browser:
 ```javascript
@@ -43,11 +42,13 @@ node:
 
 ### 项目features
 1.混合ssr和客户端渲染：
+
 受淘宝pc首页启发，首次只渲染用户可见部分节点（ssr部分），其余以骨架屏呈现，用户下拉时使用客户端渲染，减轻服务端压力
 
 2.使用页面缓存（qps提高一倍）
 
 第一阶段：因为首页数据不经常变化，考虑第一次请求把数据stringify存在内存或者redis，再次请求不用调用服务端接口，减小服务端压力，提高首页返回速度。
+
 但使用ab进行压测后，qps没什么变化，甚至有时下降。原因就是JSON.stringify太耗时，如图：
 
 ![](https://github.com/zhr7777777/zkh-react-isomorphic/blob/master/README/noCache.jpg)
@@ -58,7 +59,9 @@ node:
 最后：设置homePageBuf缓存页面Buffer，延迟3秒清除homePageBuf（Buffer比string赋值给body更快）
 
 3.使用es6模板字符串实现的模板引擎
+
 使用vm模块传入模板路径，动态读取模板文件。同时可以实现xss过滤，includes子模板等模板引擎常有的功能
+
 使用with关键字，方便插值
 
 ```javascript
@@ -79,3 +82,16 @@ function createTemplate(templatePath) { //
   )
 }
 ```
+
+4.关于react-router和redux在服务端的渲染
+
+由于服务端同步性，仅有一次渲染的机会。
+
+对于多路由，每个路由初始化数据可能不同，比如首页调用http接口拿数据，登录页则没有数据源，当访问登录页时，不应该获取数据。
+对于redux，每个路由store内的初始化数据也可能不相同
+
+解决办法：
+建立一个路由表，对于需要数据初始化或者store数据初始化的路由，设置一个loadData函数。服务端再渲染页面之前，调用这个函数初始化数据。
+参考[react-router官方](https://reacttraining.com/react-router/web/guides/server-rendering)
+参考[redux官方](https://redux.js.org/recipes/server-rendering)
+
