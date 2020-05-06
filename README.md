@@ -92,6 +92,8 @@ function createTemplate(templatePath) { //
 
 解决办法：
 建立一个路由表，对于需要数据初始化或者store数据初始化的路由，设置一个loadData函数。服务端再渲染页面之前，调用这个函数初始化数据。
+
 参考[react-router官方](https://reacttraining.com/react-router/web/guides/server-rendering)
+
 参考[redux官方](https://redux.js.org/recipes/server-rendering)
 
