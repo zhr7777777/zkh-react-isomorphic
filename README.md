@@ -1,5 +1,7 @@
 ## 基于koa2和react实现一个h5网上商城首页的同构
 
+![](https://github.com/zhr7777777/zkh-react-isomorphic/blob/master/README/isomorphic.gif)
+
 ## 运行
 
 ```bash
@@ -44,8 +46,12 @@ node:
 受淘宝pc首页启发，首次只渲染用户可见部分节点（ssr部分），其余以骨架屏呈现，用户下拉时使用客户端渲染，减轻服务端压力
 
 2.使用页面缓存（qps提高一倍）
-第一阶段：因为首页数据不经常变化，想到第一次请求把数据stringify存在内存或者redis，再次请求不用调用服务端接口，减小服务端压力，提高首页返回速度。
-但使用ab进行压测后，qps没什么变化，甚至有时下降。原因就是JSON.stringify太耗时
+
+第一阶段：因为首页数据不经常变化，考虑第一次请求把数据stringify存在内存或者redis，再次请求不用调用服务端接口，减小服务端压力，提高首页返回速度。
+但使用ab进行压测后，qps没什么变化，甚至有时下降。原因就是JSON.stringify太耗时，如图：
+
+![](https://github.com/zhr7777777/zkh-react-isomorphic/blob/master/README/noCache.jpg)
+![](https://github.com/zhr7777777/zkh-react-isomorphic/blob/master/README/useCache.jpg)
 
 第二阶段：使用koa-cache-lite缓存页面并设置3秒过期，看过koa-cache-lite源码，可以自己使用setTimeout实现，不必引入包增加代码体积
 
