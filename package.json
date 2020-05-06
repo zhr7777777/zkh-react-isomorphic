@@ -1,0 +1,32 @@
+{
+  "name": "zkh-react-isomorphic",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./node/entry",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antd-mobile": "^2.3.1",
+    "axios": "^0.19.2",
+    "koa": "^2.11.0",
+    "koa-cache-lite": "^3.8.8",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "webpack-isomorphic-tools": "^3.0.6"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
+    "babel-plugin-dynamic-import-node": "^2.3.0"
+  }
+}

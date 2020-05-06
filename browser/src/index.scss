@@ -1,0 +1,48 @@
+html {
+  box-sizing: border-box;
+}
+body, p, h2, h3, h4 {
+  margin: 0;
+  font-size: 14px;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  border: 0;
+  outline: none;  /*remove the border when the input focus */
+}
+
+.slider-decorator-0 {
+  bottom: 7px !important;
+}
+
+.am-carousel-wrap {
+  font-size: 18px;
+  color: #000;
+  background: none;
+  text-align: center;
+  zoom: 1;
+  width: 100%;
+  .am-carousel-wrap-dot {
+    display: inline-block;
+    zoom: 1;
+    & > span {
+      margin: 0 3px;
+    }
+  }
+}
+
+// .am-notice-bar {
+//   background-color: transparent !important;
+//   color: #666 !important;
+//   font-size: 13px !important;
+// }
+
+// .am-icon-voice {
+//   color: #e50012 !important;
+// }
